@@ -76,7 +76,7 @@
                 1
             </td>
             <td>
-                <input type="text" name="payer_corp_name">
+                <input type="text" name="payer_corp_name" maxlength="50">
             </td>
             <td>
                 <select name="is_corporation_connected">
@@ -85,7 +85,7 @@
                 </select>
             </td>
             <td>
-                <input type="text" name="number_of_business">
+                <input type="text" name="number_of_business" maxlength="20">
             </td>
             <td class="action-column">
                 <button onclick="removeRow(this)">-</button>
@@ -176,10 +176,10 @@
         </tr>
         <tr>
             <td class="line-number">1</td>
-            <td><input type="text" name="part3_class_number"></td>
-            <td><input type="text" name="part3_inv_description"></td>
+            <td><input type="text" name="part3_class_number" maxlength="50"></td>
+            <td><input type="text" name="part3_inv_description" maxlength="99"></td>
             <td><input type="date" name="part3_date_available"></td>
-            <td><input type="text" name="part3_atlantic_location"></td>
+            <td><input type="text" name="part3_atlantic_location" maxlength="30"></td>
             <td><input type="number" name="part3_inv_amount" step="0.01"></td>
             <td class="action-column"><button onclick="removeRow(this)">-</button></td>
         </tr>
@@ -558,7 +558,6 @@
         <div style="padding-bottom: 10px;"><span class="special-number">246</span> What scientific or technological advancements did you achieve or attempt to achieve as a result of the work described in line 242? (Maximum 350 words) </div>
         <textarea id="sectionb_advancements" name="advancements" rows="5" maxlength="350"></textarea>
     </div>
-
 
     <div id="bottom-save">
         <button id="bottom-save-btn">Save</button>
