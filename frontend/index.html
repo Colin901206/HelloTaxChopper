@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Your Tax</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="load-overlay" class="overlay">
+        <div class="load-window">
+            <button id="close-load" class="close-button">&times;</button>
+            <h2>Load</h2>
+            <form id="load-form">
+                <input type="text" id="pre_tax_code" placeholder="You can load your previous tax info by tax code." required>
+                <div class="button-group">
+                    <button type="submit" id="loadtax-button">Load</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <header id="page-header">
+        <div id="header-placeholder"></div>
+        <h1>File Your Tax</h1>
+        <div class="header-buttons">
+            <button id="header-load-btn">Load</button>
+        </div>
+    </header>
+    
+    <div id="content">
+    <h1>Dividends Received and Taxable Dividends Paid</h1>
+    
+	<div id="startText">
+        <input type="text" id="tax_code" name="tax_code" hidden>
+		<ul>
+			<li>Corporations must use this schedule to report:</li>
+				<div id="innerText">
+					<ul>
+						<li>non-taxable dividends under section 83;</li>
+						<li>deductible dividends under subsection 138(6);</li>
+						<li>taxable dividends deductible from income under section 112, subsection 113(2) and paragraphs 113(1)(a),(a.1), (b) or (d); or</li>
+						<li>taxable dividends paid in the tax year that qualify for a dividend refund (see page 3).</li>
+					</ul>
+				</div>
+			<li>All legislative references are to the federal Income Tax Act.</li>
+			<li>The calculations in this schedule apply only to private or subject corporations.</li>
+		</ul>
+	</div>
+
+    <h2>Part 1 – Dividends received in the tax year</h2>
+    <table id="part1Table">
+        <tr>
+            <th></th>
+            <th>
+                A <br/>
+                Name of payer corporation <br/>
+                (from which the corporation received the dividend) <br/>
+                <span class="special-number">200</span>
+            </th>
+            <th>
+                B <br/>
+                Is the corporation connected ? <br/>
+                <span class="special-number">205</span>
+            </th>
+            <th>
+                C <br/>
+                Business Number of <span class="special-text">connected</span> corporation <br/>
+                <span class="special-number">210</span>
+            </th>
+            <th><button>+</button></th>
+            <!-- <th><button onclick="addRow('part1Table')">+</button></th> -->
+        </tr>
+        <tr>
+            <td class="line-number">
+                1
+            </td>
+            <td>
+                <input type="text" name="payer_corp_name">
+            </td>
+            <td>
+                <select name="is_corporation_connected">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </td>
+            <td>
+                <input type="text" name="number_of_business">
+            </td>
+            <td class="action-column">
+                <button onclick="removeRow(this)">-</button>
+            </td>
+        </tr>
+    </table>
+</th>
+
+	<h2>Part 2 – Request for carryback of credit from investments in qualified property</h2>
+    <table id="part2Table">
+        <tr>
+            <th></th>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Day</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>1st previous tax year</td>
+            <td><input type="text" name="first_pre_tax_year"></td>
+            <td><input type="text" name="first_pre_tax_month"></td>
+            <td><input type="text" name="first_pre_tax_day"></td>
+            <td>..........................................................................................</td>
+            <td>Credit to be applied <span class="special-number">901</span></td>
+            <td><input type="number" id="credit_901" name="credit_901" step="0.01"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>2nd previous tax year</td>
+            <td><input type="text" name="second_pre_tax_year"></td>
+            <td><input type="text" name="second_pre_tax_month"></td>
+            <td><input type="text" name="second_pre_tax_day"></td>
+            <td>..........................................................................................</td>
+            <td>Credit to be applied <span class="special-number">902</span></td>
+            <td><input type="number" id="credit_902" name="credit_902" step="0.01"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>3rd previous tax year</td>
+            <td><input type="text" name="third_pre_tax_year"></td>
+            <td><input type="text" name="third_pre_tax_month"></td>
+            <td><input type="text" name="third_pre_tax_day"></td>
+            <td>..........................................................................................</td>
+            <td>Credit to be applied <span class="special-number">903</span></td>
+            <td><input type="number" id="credit_903" name="credit_903" step="0.01"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total of lines 901 to 903 <br/> Enter at amount 5E. </td>
+            <td><input type="text" id="part2_total_credits" name="part2_total_credits" readonly></td>
+            <td>6A</td>
+        </tr>
+    </table>
+
+    <h2>Part 3 – Eligible investments for qualified property from the current tax year</h2>
+    <table id="part3Table" style="margin-bottom: 0;">
+        <tr>
+            <th></th>
+            <th>
+                Capital cost allowance class number<br/>
+                <span class="special-number">105</span>
+            </th>
+            <th>
+                Description of investment<br/>
+                <span class="special-number">110</span>
+            </th>
+            <th>
+                Date available for use<br/>
+                <span class="special-number">115
+            </th>
+            <th>
+                Location used in Atlantic Canada (province)<br/>
+                <span class="special-number">120
+            </th>
+            <th>
+                Amount of investment<br/>
+                <span class="special-number">125
+            </th>
+            <th><button class="add-button">+</button></th>
+        </tr>
+        <tr>
+            <td class="line-number">1</td>
+            <td><input type="text" name="part3_class_number"></td>
+            <td><input type="text" name="part3_inv_description"></td>
+            <td><input type="date" name="part3_date_available"></td>
+            <td><input type="text" name="part3_atlantic_location"></td>
+            <td><input type="number" name="part3_inv_amount" step="0.01"></td>
+            <td class="action-column"><button onclick="removeRow(this)">-</button></td>
+        </tr>
+    </table>
+    <table id="part3TableButtom">
+        <tr>
+            <th colspan="5" style="text-align: right; border: none; width: 85%;">Total of investments for qualified property</th>
+            <th style="width: 10%;"><input type="text" id="part3_total_inv" name="part3_total_inv" readonly></th>
+			<th style="width: 5%;">4A</th>
+        </tr>
+    </table>
+    <table id="part3InvisableTable">
+        <tr>
+            <td>Is your tax year begins after December 31, 2023 ?</td>
+            <td>........................................................................................... <span class="special-number">102</span></td>
+			<td>
+				<div class="form-group">
+					<div class="checkbox-group">
+						<label for="part3_tax_year_yes"> <input type="radio" id="part3_tax_year_yes" name="part3_tax_year_after_2023" value="1"> Yes</label>
+						<label for="part3_tax_year_no">  <input type="radio" id="part3_tax_year_no"  name="part3_tax_year_after_2023" value="0"> No </label>
+					</div>
+				</div>
+			</td>
+        </tr>
+    </table>
+
+
+    <h2>Part 4 – Calculation of Part IV tax payable</h2>
+    <table id="part4TableOne">
+        <tr>
+            <td>
+            <table style="margin-bottom: 0;">
+                <tr>
+                    <td style="text-align: left; padding: 0;">
+                        Part IV tax on dividends received <span class="special-text">before</span> 2024, before deductions .............................................................
+                    </td>
+                </tr>
+            </table>
+			</td>
+            <td><input type="number" id="part4_input1" name="part4_input1" step="0.01"></td>
+			<td style="text-align: left;">a</td>
+			<td></td>
+			<td></td>
+        </tr>
+         <tr>
+            <td>
+            <table style="margin-bottom: 0;">
+                <tr>
+                    <td style="text-align: left; padding: 0;">
+                        Part IV tax on dividends received <span class="special-text">after</span> 2023, before deductions ................................................................
+                    </td>
+                </tr>
+            </table>
+			</td>
+            <td><input type="number" id="part4_input2" name="part4_input2" style="border-bottom: 3px solid #000;"></td>
+			<td style="text-align: left;">b</td>
+			<td></td>
+			<td></td>
+        </tr>
+        <tr>
+            <td>
+            <table style="margin-bottom: 0;">
+                <tr>
+                    <td style="text-align: left; padding: 0;">
+                        Part IV tax before deductions (amount a <span class="special-text">plus</span> amount b) ............................................................................
+                    </td>
+                </tr>
+            </table>
+			</td>
+            <td><input type="text" id="part4_input3" name="part4_input3" readonly style="border-bottom: 3px double #000;"></td>
+			<td style="text-align: left;">►</td>
+			<td><input type="number" id="part4_input4" name="part4_input4" readonly></td>
+			<td style="text-align: left;">L</td>
+        </tr>
+        <tr>
+            <th>
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <th style="text-align: left; padding: 0;">
+                            <span class="special-text">Deduct:</span>
+                        </th>
+                    </tr>
+                </table>
+			</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+			<td colspan="2">
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <td style="text-align: left; padding: 0;">
+                            Part IV.I tax payable on dividends subject to Part IV tax................................................................................
+                        </td>
+                    </tr>
+                </table>
+            </td>
+			<td style="text-align: right;"><span class="special-number">320</span></td>
+			<td><input type="number" id="part4_input5" name="part4_input5"></td>
+			<td></td>
+        </tr>
+         <tr>
+			<td colspan="3">
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <td style="text-align: right; padding: 0;">
+                            Subtotal (amount L <span class="special-text">minus</span> line 320)
+                        </td>
+                    </tr>
+                </table>
+            </td>
+			<td><input type="number" id="part4_input6" name="part4_input6" readonly></td>
+			<td style="text-align: left;">M</td>
+        </tr>
+        <tr>
+            <th>
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <th style="text-align: left; padding: 0;">
+                            <span class="special-text">Deduct:</span>
+                        </th>
+                    </tr>
+                </table>
+			</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <td style="text-align: left; padding: 0;">
+                            Part IV.I tax payable on dividends subject to Part IV tax .....................................................................
+                        </td>
+                        <td style="text-align: right;">
+                            <span class="special-number">330</span>
+                        </td>
+                    </tr>
+                </table>
+			</td>
+			<td><input type="number" id="part4_input7" name="part4_input7" step="0.01"></td>
+			<td style="text-align: left;">c</td>
+			<td></td>
+			<td></td>
+        </tr>
+        <tr>
+            <td>
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <td style="text-align: left; padding: 0;">
+                            Non-capital losses from previous years claimed to reduce Part IV tax ............................................... 
+                        </td>
+                        <td style="text-align: right;">
+                            <span class="special-number">335</span>
+                        </td>
+                    </tr>
+                </table>
+			</td>
+			<td><input type="number" id="part4_input8" name="part4_input8" step="0.01"></td>
+			<td style="text-align: left;">d</td>
+			<td></td>
+			<td></td>
+        </tr>
+        <tr>
+            <td>
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <td style="text-align: left; padding: 0;">
+                            Current-year farm loss claimed to reduce Part IV tax ......................................................................... 
+                        </td>
+                        <td style="text-align: right;">
+                            <span class="special-number">340</span>
+                        </td>
+                    </tr>
+                </table>
+			</td>
+			<td><input type="number" id="part4_input9" name="part4_input9" step="0.01"></td>
+			<td style="text-align: left;">e</td>
+			<td></td>
+			<td></td>
+        </tr>
+        <tr>
+            <td>
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <td style="text-align: left; padding: 0;">
+                            Farm losses from previous years claimed to reduce Part IV tax 345 f ................................................
+                        </td>
+                        <td style="text-align: right;">
+                            <span class="special-number">345</span>
+                        </td>
+                    </tr>
+                </table>
+			</td>
+			<td><input type="number" id="part4_input10" name="part4_input10" step="0.01" style="border-bottom: 3px solid #000;"></td>
+			<td style="text-align: left;">f</td>
+			<td></td>
+			<td></td>
+        </tr>
+        <tr>
+            <td>
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <td style="text-align: right;">
+                            Total losses applied against Part IV tax (total of amounts c to f)
+                        </td>
+                    </tr>
+                </table>
+			</td>
+			<td><input type="number" id="part4_input11" name="part4_input11" readonly style="border-bottom: 3px double #000;"></td>
+			<td style="text-align: left;">g</td>
+			<td></td>
+			<td></td>
+        </tr>
+        <tr>
+            <th>
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <th style="text-align: left; padding: 0;">
+                            <span class="special-text">If your tax year begins after December 31, 2023:</span>
+                        </th>
+                    </tr>
+                </table>
+			</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>
+            <table style="margin-bottom: 0;">
+                <tr>
+                    <td style="text-align: left; padding: 0;">
+                        Amount g <span class="special-text">multiplied</span> by 38 <span class="right-up">1/3</span>% .........................................................................................................
+                    </td>
+                </tr>
+            </table>
+			</td>
+            <td><input type="number" id="part4_input12" name="part4_input12" readonly style="border-bottom: 3px double #000;"></td>
+			<td style="text-align: left;">h</td>
+			<td></td>
+			<td></td>
+        </tr>
+        <tr>
+            <th colspan="3">
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <th style="text-align: left; padding: 0;">
+                            <span class="special-text">If your tax year begins before January 1, 2024:</span>
+                        </th>
+                    </tr>
+                </table>
+			</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <table style="margin-bottom: 0;" id="part4TableTwo">
+                    <tr>
+                        <td></td>
+                        <td style="text-align: left; padding: 0;">
+                            Amount b or M whichever is less:
+                        </td>
+                        <td><input type="number" id="part4_input13" name="part4_input13" readonly></td>
+                        <td style="text-align: center;">÷ 38 <span class="right-up">1/3</span>% =</td>
+                        <td><input type="number" id="part4_input14" name="part4_input14" readonly style="border-bottom: 3px double #000;"></td>
+                        <td style="text-align: left;">1</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="3" style="text-align: left; padding: 0; width: 60%; ">
+                            Amount 1 or g, whichever is less ......................................................
+                        </td>
+                        <td><input type="number" id="part4_input15" name="part4_input15" readonly style="border-bottom: 3px double #000;"></td>
+                        <td style="text-align: left;">2</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="3" style="text-align: left; padding: 0; width: 60%; ">
+                            Amount g <span class="special-text">minus</span> amount 2 ...............................................................
+                        </td>
+                        <td><input type="number" id="part4_input16" name="part4_input16" readonly style="border-bottom: 3px double #000;"></td>
+                        <td style="text-align: left;">3</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Amount 2</td>
+                        <td><input type="number" id="part4_input17" name="part4_input17" readonly></td>
+                        <td style="text-align: center;">× 38 <span class="right-up">1/3</span>% =</td>
+                        <td><input type="number" id="part4_input18" name="part4_input18" readonly></td>
+                        <td>i</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Amount 3</td>
+                        <td><input type="number" id="part4_input19" name="part4_input19" readonly></td>
+                        <td style="text-align: center;">× 38 <span class="right-up">1/3</span>% =</td>
+                        <td><input type="number" id="part4_input20" name="part4_input20" readonly style="border-bottom: 3px solid #000;"></td>
+                        <td>j</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="2">Subtotal (amount i <span class="special-text">plus</span> amount j) </td>
+                        <td><input type="number" id="part4_input21" name="part4_input21" readonly style="border-bottom: 3px double #000;"></td>
+                        <td>k</td>
+                    </tr>
+                </table>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+			<td colspan="3">
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <td style="text-align: left; padding: 0;">
+                            Amount h or amount k, whichever applies depending on your tax year start date ....................................
+                        </td>
+                    </tr>
+                </table>
+            </td>
+			<td><input type="number" id="part4_input22" name="part4_input22" style="border-bottom: 3px solid #000;"></td>
+			<td style="text-align: left;">N</td>
+        </tr>
+        <tr>
+			<td colspan="2">
+                <table style="margin-bottom: 0;">
+                    <tr>
+                        <td style="text-align: left; padding: 0;">
+                            <span class="special-text">Part IV tax payable</span> (amount M <span class="special-text">minus</span> amount N, if negative enter "0") ................................................
+                        </td>
+                    </tr>
+                </table>
+            </td>
+			<td style="text-align: right;"><span class="special-number">360</span></td>
+			<td><input type="number" id="part4_input23" name="part4_input23" readonly style="border-bottom: 3px double #000;"></td>
+			<td></td>
+        </tr>
+    </table>
+
+    <div class="form-group">
+        <div style="padding-bottom: 10px;">What type is the residential property? Tick only one box. </div>
+        <div class="checkbox-group property-type">
+            <label for="part4_property_type_detached"><span class="special-number">240</span><input type="radio" id="part4_property_type_detached" name="part4_property_type" value="detached"> Detached house</label>
+            <label for="part4_property_type_semidetached"><span class="special-number">241</span><input type="radio" id="part4_property_type_semidetached" name="part4_property_type" value="semi_detached"> Semi-detached house</label>
+            <label for="part4_property_type_duplex"><span class="special-number">242</span><input type="radio" id="part4_property_type_duplex" name="part4_property_type" value="duplex"> Duplex</label>
+            <label for="part4_property_type_triplex"><span class="special-number">243</span><input type="radio" id="part4_property_type_triplex" name="part4_property_type" value="triplex"> Triplex</label>
+        </div>
+    </div>
+
+    <h2>Section B – Dividends descriptions</h2>
+    <div class="form-group">
+        <div style="padding-bottom: 10px;"><span class="special-number">242</span> What scientific or technological uncertainties did you attempt to overcome? (Maximum 350 words) </div>
+        <textarea id="sectionb_uncertainties" name="uncertainties" rows="5" maxlength="350"></textarea>
+    </div>
+    <div class="form-group">
+        <div style="padding-bottom: 10px;"><span class="special-number">246</span> What scientific or technological advancements did you achieve or attempt to achieve as a result of the work described in line 242? (Maximum 350 words) </div>
+        <textarea id="sectionb_advancements" name="advancements" rows="5" maxlength="350"></textarea>
+    </div>
+
+
+    <div id="bottom-save">
+        <button id="bottom-save-btn">Save</button>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 File Your Tax. All rights reserved.</p>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

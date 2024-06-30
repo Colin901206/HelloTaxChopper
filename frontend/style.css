@@ -1,0 +1,484 @@
+body {
+    padding-top: 60px; /* Add padding to account for the fixed header */
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.load-window {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    position: relative;
+}
+
+.load-window h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.load-window input {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.load-window button {
+    flex: 1;
+    padding: 12px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#loadtax-button {
+    background-color: #4CAF50;
+}
+
+#loadtax-button:hover {
+    background-color: #45a049;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #888;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.close-button:hover {
+    background-color: #d7d7d7;
+    color: #333;
+}
+
+.close-button:focus {
+    outline: none;
+}
+
+#page-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #f8f8f8;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+#page-header h1 {
+    margin: 0;
+    font-size: 24px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+#header-load-btn {
+    padding: 8px 16px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#header-load-btn {
+    background-color: #3498db;
+}
+
+#header-load-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Add this new style to create space for the title */
+#header-placeholder {
+    width: 80px; /* Adjust this value to match the width of your save button */
+    visibility: hidden;
+}
+
+/* Ensure the content doesn't overlap with the footer */
+#content {
+    min-height: calc(100vh - 180px); /* Adjust this value based on your header and footer height */
+    padding-top: 60px;
+    padding-bottom: 60px; /* Add some padding at the bottom */
+}
+
+#startText ul {
+	padding-inline-start: 20px;
+}
+
+#innerText li {
+    list-style-type: '- ';
+}
+
+h1, h2 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    text-align: center;
+	font-weight: normal;
+}
+
+input[type="text"], input[type="number"], input[type="date"], select, textarea {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #000;
+    outline: none;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}
+
+.special-text {
+  font-weight: bold;
+}
+
+.special-number {
+    color: white;
+    background-color: black;
+}
+
+#part1Table td:nth-child(1) { 
+	width: 3%; 
+}
+
+#part1Table td:nth-child(2) { 
+	width: 54%; 
+}
+
+#part1Table td:nth-child(3) { 
+	width: 20%; 
+}
+
+#part1Table td:nth-child(4) { 
+	width: 20%; 
+}
+
+#part1Table td:nth-child(5) { 
+	width: 3%; 
+}
+
+#part2Table {
+    width: 100%;
+}
+
+#part2Table th {
+	border: none;
+    text-align: center;
+    padding: 8px;
+}
+
+#part2Table td {
+	border: none;
+    text-align: left;
+    padding: 8px;
+}
+
+#part2Table td:first-child {
+    width: 15%;
+}
+
+#part2Table td:nth-child(2) {
+    width: 6%;
+}
+
+#part2Table td:nth-child(3) {
+    width: 5%;
+}
+
+#part2Table td:nth-child(4) {
+    width: 5%;
+}
+
+#part2Table td:nth-child(5) {
+	text-align: center;
+    width: 37%;
+}
+
+#part2Table td:nth-child(6) {
+    width: 17%;
+}
+
+#part2Table input[type="date"],
+#part2Table input[type="number"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#part3Table td:nth-child(1) {
+    width: 5%;
+}
+
+#part3Table td:nth-child(2) {
+    width: 10%;
+}
+
+#part3Table td:nth-child(3) {
+    width: 45%;
+}
+
+#part3Table td:nth-child(4) {
+    width: 10%;
+}
+
+#part3Table td:nth-child(5) {
+    width: 15%;
+}
+
+#part3Table td:nth-child(6) {
+    width: 10%;
+}
+
+#part3Table td:nth-child(7) {
+    width: 5%;
+}
+
+#part3InvisableTable th,
+#part3InvisableTable td {
+	border: none;
+}
+
+#part3InvisableTable td:nth-child(1) { 
+	width: 40%; 
+}
+
+#part3InvisableTable td:nth-child(2) { 
+	width: 40%; 
+    text-align: center;
+}
+
+#part3InvisableTable td:nth-child(3) { 
+	width: 20%; 
+    text-align: center;
+}
+
+.form-group {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    background-color: #f0f0f0; /* Light grey background */
+    resize: vertical; /* Allow vertical resizing */
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* New styles for the residential property type checkbox group */
+.checkbox-group.property-type {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.checkbox-group.property-type label {
+    flex-basis: calc(25% - 10px);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group.property-type input[type="radio"] {
+    margin-right: 5px;
+}
+
+.line-number {
+    text-align: center;
+    font-weight: bold;
+}
+
+.action-column {
+    text-align: center;
+}
+
+.action-column button {
+    display: inline-block;
+}
+
+.total-line {
+    font-weight: bold;
+    border-top: 2px solid #000;
+}
+
+#part4TableOne th {
+    text-align: left;
+}
+
+#part4TableOne th,
+#part4TableOne td {
+	border: none;
+}
+
+#part4TableOne td:nth-child(1) { 
+	width: 70%; 
+}
+
+#part4TableOne td:nth-child(2) { 
+	width: 10%; 
+    text-align: center;
+}
+
+#part4TableOne td:nth-child(3) { 
+	width: 5%; 
+    text-align: center;
+}
+
+#part4TableOne td:nth-child(4) { 
+	width: 10%; 
+    text-align: center;
+}
+
+#part4TableOne td:nth-child(5) { 
+	width: 5%; 
+    text-align: center;
+}
+
+.right-up {
+    font-size: 10pt;
+    vertical-align: 3pt;
+}
+
+
+#part4TableTwo td:nth-child(1) { 
+	width: 5%; 
+}
+
+#part4TableTwo td:nth-child(2) { 
+	width: 25%; 
+}
+
+#part4TableTwo td:nth-child(3) { 
+	width: 10%; 
+}
+
+#part4TableTwo td:nth-child(4) { 
+	width: 15%; 
+}
+
+#part4TableTwo td:nth-child(5) { 
+	width: 10%; 
+}
+
+#part4TableTwo td:nth-child(6) { 
+	width: 15%; 
+}
+
+#part4TableTwo td:nth-child(7) { 
+	width: 10%; 
+}
+
+#part4TableTwo td:nth-child(8) { 
+	width: 10%; 
+}
+
+#bottom-save {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#bottom-save-btn {
+    padding: 15px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#bottom-save-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Add new styles for the footer */
+footer {
+    background-color: #f8f8f8;
+    color: #333;
+    text-align: center;
+    padding: 1px;
+    font-size: 14px;
+    border-top: 1px solid #ddd;
+}
