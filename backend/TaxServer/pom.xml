@@ -12,8 +12,8 @@
     </parent>
 
     <groupId>ca.taxchopper</groupId>
-    <artifactId>TaxServer</artifactId>
-    <version>1.0</version>
+    <artifactId>taxserver</artifactId>
+    <version>1.1</version>
     <name>TaxServer</name>
     <description>Demo project for Spring Boot</description>
 
