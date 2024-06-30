@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>TaxServer</contextName>
+    <!-- log file save path -->
+    <property name="LOG_FILE_PATH" value="logs"/>
+
+    <!--output to console ConsoleAppender-->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--output to file-->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>Info</level>
+        </filter>
+        <File>${LOG_FILE_PATH}/TaxServer-info.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_FILE_PATH}/TaxServer-info.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="fileDebugLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>Debug</level>
+        </filter>
+        <File>${LOG_FILE_PATH}/TaxServer-debug.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_FILE_PATH}/TaxServer-debug.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>Error</level>
+        </filter>
+        <File>${LOG_FILE_PATH}/TaxServer-error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_FILE_PATH}/TaxServer-error.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--point out base log level-->
+    <root level="INFO">
+        <!--appender will be added to logger-->
+        <appender-ref ref="consoleLog"/>
+<!--        <appender-ref ref="fileErrorLog"/>-->
+<!--        <appender-ref ref="fileInfoLog"/>-->
+<!--        <appender-ref ref="fileDebugLog"/>-->
+    </root>
+</configuration>
