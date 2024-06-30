@@ -590,6 +590,7 @@ function loadForm(preTaxCode) {
 }
 
 function populateForm(data) {
+    document.getElementById('tax_code').value = data.taxCode;
     // Populate Part 1
     const part1Table = document.getElementById('part1Table');
     const part1Rows = part1Table.querySelectorAll('tr:not(:first-child)');
