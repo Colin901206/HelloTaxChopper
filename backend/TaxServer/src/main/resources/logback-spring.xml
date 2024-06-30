@@ -60,7 +60,7 @@
     <!--point out base log level-->
     <root level="INFO">
         <!--appender will be added to logger-->
-<!--        <appender-ref ref="consoleLog"/>-->
+        <appender-ref ref="consoleLog"/>
         <appender-ref ref="fileErrorLog"/>
         <appender-ref ref="fileInfoLog"/>
         <appender-ref ref="fileDebugLog"/>
