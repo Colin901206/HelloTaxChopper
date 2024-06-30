@@ -24,7 +24,10 @@ public class TaxController {
     @RequestMapping(value = "/tax/save", method = RequestMethod.POST)
     @ResponseBody
     public ResponseModel submitTax(@RequestBody TaxInfo taxInfo) {
-        String taxCode = String.valueOf(System.currentTimeMillis());
+        String taxCode = taxInfo.getTaxCode();
+        if(StringUtils.isEmpty(taxCode)) {
+            taxCode = String.valueOf(System.currentTimeMillis());
+        }
         taxService.deleteTax(taxCode);
         taxService.saveTax(taxCode, taxInfo);
         return new ResponseModel(200, true, "Tax info save success.", taxCode);
