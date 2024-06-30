@@ -46,7 +46,7 @@ public class TaxService {
         }
 
         List<ReceivedDividend> part1 = taxInfo.getPart1();
-        if (part1 != null && part1.size() > 1) {
+        if (part1 != null && part1.size() > 0) {
             for (ReceivedDividend receivedDividend : part1) {
                 receivedDividend.setTaxCode(taxCode);
                 taxDao.savePart1(receivedDividend);
@@ -72,7 +72,7 @@ public class TaxService {
         }
 
         List<EligibleInvestmentDetail> investments = taxInfo.getPart3().getInvestments();
-        if (investments != null && investments.size() > 1) {
+        if (investments != null && investments.size() > 0) {
             for (EligibleInvestmentDetail eligibleInvestmentDetail : investments) {
                 eligibleInvestmentDetail.setTaxCode(taxCode);
                 taxDao.saveEligibleInvestmentDetail(eligibleInvestmentDetail);
