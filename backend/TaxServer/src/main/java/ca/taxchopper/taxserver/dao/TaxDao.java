@@ -1,10 +1,9 @@
 package ca.taxchopper.taxserver.dao;
 
 import ca.taxchopper.taxserver.model.*;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface TaxDao {
@@ -185,62 +184,111 @@ public interface TaxDao {
     @Options(useGeneratedKeys = true, keyProperty = "dividendDescriptionId", keyColumn = "dividend_description_id")
     int saveSectionB(DividendDescription sectionB);
 
+    @Select("SELECT " +
+                "T.tax_id AS taxId, " +
+                "T.tax_code AS taxCode " +
+            "FROM t_tax_info T " +
+            "WHERE T.status = '0' " +
+            "AND T.tax_code = #{taxCode}")
+    TaxInfo queryTaxInfo(String taxCode);
 
-//    @Select("SELECT " +
-//            "T.word_id AS wordId, " +
-//            "T.word AS word " +
-//            "FROM t_words T " +
-//            "WHERE T.status = '1' " +
-//            "AND T.word = #{word}")
-//    Word queryWord(String word);
-//
-//    @Select("SELECT " +
-//            "word_form_id          AS wordFormId," +
-//            "word_id               AS wordId," +
-//            "part_of_speech        AS partOfSpeech," +
-//            "word_phonetic         AS wordPhonetic," +
-//            "base_form             AS baseForm," +
-//            "is_countable          AS isCountable," +
-//            "plural_form           AS pluralForm," +
-//            "possessive_case       AS possessiveCase," +
-//            "third_person_singular AS thirdPersonSingular," +
-//            "present_participle    AS presentParticiple," +
-//            "past_simple           AS pastSimple," +
-//            "past_participle       AS pastParticiple," +
-//            "comparative           AS comparative," +
-//            "superlative           AS superlative," +
-//            "nominative            AS nominative," +
-//            "objective             AS objective," +
-//            "possessive_adjectives AS possessiveAdjectives," +
-//            "possessive_nouns      AS possessiveNouns," +
-//            "reflexive_pronouns    AS reflexivePronouns " +
-//            "FROM t_word_forms T " +
-//            "WHERE T.status = '1' " +
-//            "AND T.word_id = #{wordId} " +
-//            "order by T.word_form_id asc")
-//    List<WordForm> queryWordForms(Integer wordId);
-//
-//    @Select("SELECT " +
-//            "meaning_id      AS meaningId," +
-//            "word_form_id    AS wordFormId," +
-//            "chinese_meaning AS chineseMeaning," +
-//            "english_meaning AS englishMeaning," +
-//            "example         AS example," +
-//            "translate       AS translate " +
-//            "FROM t_word_meanings T " +
-//            "WHERE T.status = '1' " +
-//            "AND T.word_form_id = #{wordFormId} " +
-//            "order by T.meaning_id asc")
-//    List<WordMeaning> queryWordMeanings(Integer wordFormId);
-//
-//    @Select("SELECT " +
-//            "phrase_id         AS phraseId," +
-//            "meaning_id        AS meaningId," +
-//            "english_phrases   AS englishPhrases," +
-//            "phrases_translate AS phrasesTranslate " +
-//            "FROM t_word_phrases T " +
-//            "WHERE T.status = '1' " +
-//            "AND T.meaning_id = #{meaningId} " +
-//            "order by T.phrase_id asc")
-//    List<WordPhrase> queryWordPhrases(Integer meaningId);
+    @Select("SELECT " +
+                "T.dividend_id AS dividendId, " +
+                "T.tax_code AS taxCode, " +
+                "T.part1_tableLine AS part1TableLine, " +
+                "T.payer_corporation AS payerCorporation, " +
+                "T.is_connected AS isConnected, " +
+                "T.business_number AS businessNumber " +
+            "FROM t_received_dividend T " +
+            "WHERE T.status = '0' " +
+            "AND T.tax_code = #{taxCode}")
+    List<ReceivedDividend> queryPart1(String taxCode);
+
+    @Select("SELECT " +
+                "T.carryback_id AS carrybackId, " +
+                "T.tax_code AS taxCode, " +
+                "T.first_previous_tax_year AS firstPreviousTaxYear, " +
+                "T.first_previous_tax_month AS firstPreviousTaxMonth, " +
+                "T.first_previous_tax_day AS firstPreviousTaxDay, " +
+                "T.first_previous_tax_credit AS firstPreviousTaxCredit, " +
+                "T.second_previous_tax_year AS secondPreviousTaxYear, " +
+                "T.second_previous_tax_month AS secondPreviousTaxMonth, " +
+                "T.second_previous_tax_day AS secondPreviousTaxDay, " +
+                "T.second_previous_tax_credit AS secondPreviousTaxCredit, " +
+                "T.third_previous_tax_year AS thirdPreviousTaxYear, " +
+                "T.third_previous_tax_month AS thirdPreviousTaxMonth, " +
+                "T.third_previous_tax_day AS thirdPreviousTaxDay, " +
+                "T.third_previous_tax_credit AS thirdPreviousTaxCredit, " +
+                "T.total_credits AS totalCredits " +
+            "FROM t_request_carryback T " +
+            "WHERE T.status = '0' " +
+            "AND T.tax_code = #{taxCode}")
+    RequestCarryback queryPart2(String taxCode);
+
+    @Select("SELECT " +
+                "T.investment_main_id AS investmentMainId, " +
+                "T.tax_code AS taxCode, " +
+                "T.total_investments AS totalInvestments, " +
+                "T.tax_year_after2023 AS taxYearAfter2023 " +
+            "FROM t_eligible_investment_main T " +
+            "WHERE T.status = '0' " +
+            "AND T.tax_code = #{taxCode}")
+    EligibleInvestmentMain queryEligibleInvestmentMain(String taxCode);
+
+    @Select("SELECT " +
+                "T.investment_detail_id AS investmentDetailId, " +
+                "T.tax_code AS taxCode, " +
+                "T.part3_tableLine AS part3TableLine, " +
+                "T.capital_cost_allowance_class_number AS capitalCostAllowanceClassNumber, " +
+                "T.description_of_investment AS descriptionOfInvestment, " +
+                "T.date_available_for_use AS dateAvailableForUse, " +
+                "T.location_used_in_atlantic AS locationUsedInAtlantic, " +
+                "T.amount_of_investment AS amountOfInvestment " +
+            "FROM t_eligible_investment_detail T " +
+            "WHERE T.status = '0' " +
+            "AND T.tax_code = #{taxCode}")
+    List<EligibleInvestmentDetail> queryEligibleInvestmentDetail(String taxCode);
+
+    @Select("SELECT " +
+                "T.part4_tax_payable_id AS part4TaxPayableId, " +
+                "T.tax_code AS taxCode, " +
+                "T.dividends_before2024 AS dividendsBefore2024, " +
+                "T.dividends_after2023 AS dividendsAfter2023, " +
+                "T.partiv_tax_before_deductions AS partIVTaxBeforeDeductions, " +
+                "T.partiv_tax_before_deductions_total AS partIVTaxBeforeDeductionsTotal, " +
+                "T.partiv_i_tax_payable AS partIVITaxPayable, " +
+                "T.subtotal_m AS subtotalM, " +
+                "T.current_year_non_capital_loss AS currentYearNonCapitalLoss, " +
+                "T.previous_years_non_capital_loss AS previousYearsNonCapitalLoss, " +
+                "T.current_year_farm_loss AS currentYearFarmLoss, " +
+                "T.previous_years_farm_loss AS previousYearsFarmLoss, " +
+                "T.total_losses_applied AS totalLossesApplied, " +
+                "T.amountg_multiplied AS amountGMultiplied, " +
+                "T.amount_borm_whicheverless AS amountBOrMWhicheverLess, " +
+                "T.amount_borm_divided AS amountBOrMDivided, " +
+                "T.amount_1org_whicheverless AS amount1OrGWhicheverLess, " +
+                "T.amountg_minus_amount2 AS amountGMinusAmount2, " +
+                "T.amount2 AS amount2, " +
+                "T.amount2_multiplied AS amount2Multiplied, " +
+                "T.amount3 AS amount3, " +
+                "T.amount3_multiplied AS amount3Multiplied, " +
+                "T.subtotal_amount_iplusj AS subtotalAmountIPlusJ, " +
+                "T.amount_hork AS amountHOrK, " +
+                "T.partiv_tax_payable AS partIVTaxPayable, " +
+                "T.property_type AS propertyType " +
+            "FROM t_part4_tax_payable T " +
+            "WHERE T.status = '0' " +
+            "AND T.tax_code = #{taxCode}")
+    Part4TaxPayable queryPart4(String taxCode);
+
+    @Select("SELECT " +
+                "T.dividend_description_id AS dividendDescriptionId, " +
+                "T.tax_code AS taxCode, " +
+                "T.uncertainties AS uncertainties, " +
+                "T.advancements AS advancements " +
+            "FROM t_dividend_description T " +
+            "WHERE T.status = '0' " +
+            "AND T.tax_code = #{taxCode}")
+    DividendDescription querySectionB(String taxCode);
+
 }

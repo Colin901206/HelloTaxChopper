@@ -17,6 +17,7 @@ public class TaxService {
 
     /**
      * Delete saved tax info by tax code before save
+     *
      * @param taxCode
      */
     @Transactional(rollbackFor = Exception.class)
@@ -32,11 +33,12 @@ public class TaxService {
 
     /**
      * Save tax info
+     *
      * @param taxInfo
      */
     @Transactional(rollbackFor = Exception.class)
     public void saveTax(String taxCode, TaxInfo taxInfo) {
-        if(taxInfo != null) {
+        if (taxInfo != null) {
             taxInfo.setTaxCode(taxCode);
             taxDao.saveTaxInfo(taxInfo);
         } else {
@@ -44,8 +46,8 @@ public class TaxService {
         }
 
         List<ReceivedDividend> part1 = taxInfo.getPart1();
-        if(part1 != null && part1.size() > 1) {
-            for(ReceivedDividend receivedDividend : part1) {
+        if (part1 != null && part1.size() > 1) {
+            for (ReceivedDividend receivedDividend : part1) {
                 receivedDividend.setTaxCode(taxCode);
                 taxDao.savePart1(receivedDividend);
             }
@@ -53,7 +55,7 @@ public class TaxService {
             throw new GlobaException("Missing parameters.");
         }
 
-        if(taxInfo.getPart2() != null) {
+        if (taxInfo.getPart2() != null) {
             RequestCarryback requestCarryback = taxInfo.getPart2();
             requestCarryback.setTaxCode(taxCode);
             taxDao.savePart2(requestCarryback);
@@ -61,7 +63,7 @@ public class TaxService {
             throw new GlobaException("Missing parameters.");
         }
 
-        if(taxInfo.getPart3() != null) {
+        if (taxInfo.getPart3() != null) {
             EligibleInvestmentMain eligibleInvestmentMain = taxInfo.getPart3();
             eligibleInvestmentMain.setTaxCode(taxCode);
             taxDao.saveEligibleInvestmentMain(eligibleInvestmentMain);
@@ -70,8 +72,8 @@ public class TaxService {
         }
 
         List<EligibleInvestmentDetail> investments = taxInfo.getPart3().getInvestments();
-        if(investments != null && investments.size() > 1) {
-            for(EligibleInvestmentDetail eligibleInvestmentDetail : investments) {
+        if (investments != null && investments.size() > 1) {
+            for (EligibleInvestmentDetail eligibleInvestmentDetail : investments) {
                 eligibleInvestmentDetail.setTaxCode(taxCode);
                 taxDao.saveEligibleInvestmentDetail(eligibleInvestmentDetail);
             }
@@ -79,7 +81,7 @@ public class TaxService {
             throw new GlobaException("Missing parameters.");
         }
 
-        if(taxInfo.getPart4() != null) {
+        if (taxInfo.getPart4() != null) {
             Part4TaxPayable part4TaxPayable = taxInfo.getPart4();
             part4TaxPayable.setTaxCode(taxCode);
             taxDao.savePart4(part4TaxPayable);
@@ -87,12 +89,43 @@ public class TaxService {
             throw new GlobaException("Missing parameters.");
         }
 
-        if(taxInfo.getSectionB() != null) {
+        if (taxInfo.getSectionB() != null) {
             DividendDescription dividendDescription = taxInfo.getSectionB();
             dividendDescription.setTaxCode(taxCode);
             taxDao.saveSectionB(dividendDescription);
         } else {
             throw new GlobaException("Missing parameters.");
+        }
+    }
+
+    /**
+     * Query tax info by tax code
+     * @param taxCode
+     */
+    public TaxInfo queryTax(String taxCode) {
+        TaxInfo taxInfo = taxDao.queryTaxInfo(taxCode);
+        if(taxInfo != null) {
+
+            List<ReceivedDividend> part1 = taxDao.queryPart1(taxCode);
+            taxInfo.setPart1(part1);
+
+            RequestCarryback part2 = taxDao.queryPart2(taxCode);
+            taxInfo.setPart2(part2);
+
+            EligibleInvestmentMain eligibleInvestmentMain = taxDao.queryEligibleInvestmentMain(taxCode);
+            List<EligibleInvestmentDetail> eligibleInvestmentDetails = taxDao.queryEligibleInvestmentDetail(taxCode);
+            eligibleInvestmentMain.setInvestments(eligibleInvestmentDetails);
+            taxInfo.setPart3(eligibleInvestmentMain);
+
+            Part4TaxPayable part4 = taxDao.queryPart4(taxCode);
+            taxInfo.setPart4(part4);
+
+            DividendDescription sectionB = taxDao.querySectionB(taxCode);
+            taxInfo.setSectionB(sectionB);
+
+            return taxInfo;
+        } else {
+            throw new GlobaException("Wrong tax code.");
         }
     }
 }
